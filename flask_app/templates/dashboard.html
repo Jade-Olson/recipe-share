@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+
+<div class="outer-container">
+    <h1>Welcome {{user.first_name}}!</h1>
+    <form action="/logout" method="post" class="space-between">
+        <input type="submit" class="btn btn-primary btn-margin" value="Log Out">
+    </form>
+</div>
+<div class="outer-container space-between">
+    <p>All Posted Recipes:</p>
+    <a href="/recipes/new">+ Create</a>
+</div>
+<div class="outer-container">
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>&lt 30 mins</th>
+            <th>Posted By</th>
+            <th>Actions</th>
+        </tr>
+        {% for recipe in recipes: %}
+        <tr>
+            <td>{{recipe.name}}</td>
+
+            {% if recipe.under_mins == 1: %}
+            <td>Yes</td>
+            {% endif %}
+            {% if recipe.under_mins == 0: %}
+            <td>No</td>
+            {% endif %}
+
+            <td>{{recipe.first_name}} {{recipe.last_name}}</td>
+            <td><p>
+                <a href="/recipes/{{recipe.id}}">view recipe</a>
+                {% if recipe.user_id == user.id: %}
+                &#124
+                <a href="/recipes/{{recipe.id}}/update">edit</a> 
+                &#124
+                <a href="/recipes/{{recipe.id}}/delete">delete</a>
+                {% endif %}
+            </p></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+</body>
+</html>

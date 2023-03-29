@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+
+<div class="outer-container">
+    <h1>Welcome {{user.first_name}}!</h1>
+    <div class="space-between">
+    <a href="/recipes" style="margin-top:13px; margin-right:15px;">back to recipes</a>
+    <form action="/logout" method="post">
+        <input type="submit" class="btn btn-primary btn-margin" value="Log Out">
+    </form>
+    </div>
+</div>
+
+<div class="outer-container">
+    <h2>Edit Recipe</h2>
+</div>
+
+<div class="outer-container">
+    <div class="sub-container-recipe">
+        <form action="/recipes/{{recipe.id}}/update/submit" method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" class="form-control" value="{{recipe.name}}">
+            <label for="description">Description:</label>
+            <textarea name="description"cols="30" rows="4" class="form-control" >{{recipe.description}}</textarea>
+            <label for="instructions">Instructions:</label>
+            <textarea name="instructions"cols="30" rows="5" class="form-control">{{recipe.instructions}}</textarea>
+    </div>
+    <div class="sub-container-recipe">
+            <label for="date_made">Date Cooked/Made:</label>
+            <input type="date" name="date_made" class="form-control" style="width:130px" value="{{recipe.date_made.strftime('%Y-%m-%d')}}">
+            <label for="under_mins">Under 30 Minutes?</label>
+            <div class="form-check form-check-inline">
+                {% if recipe.under_mins|int == 1: %}
+                <input type="radio" name="under_mins" id="under_mins_yes" value="1" checked>
+                {% else: %}
+                <input type="radio" name="under_mins" id="under_mins_yes" value="1" >
+                {% endif %}
+
+                <label for="under_mins_yes" class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                {% if recipe.under_mins|int == 0: %}
+                <input type="radio" name="under_mins" id="under_mins_no" value="0" checked>
+                {% else: %}
+                <input type="radio" name="under_mins" id="under_mins_no" value="0" >
+                {% endif %}
+
+                <label for="under_mins_yes" class="form-check-label">No</label>
+            </div>
+            <input type="submit" class="btn btn-primary btn-margin">
+        </form>
+        <div style="color:red; margin-top:10px;">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+</body>
+</html>

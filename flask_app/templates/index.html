@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+<div class="outer-container">
+    <h1 style="color:blueviolet"><b>Recipe Share</b></h1>
+</div>
+<div class="outer-container">
+    <div class="sub-container">
+        <h2>Register</h2>
+        <div style="color:red">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if message != "Invalid Email/Password" %}
+            <p>{{message}}</p>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </div>
+        <form action="/register" method="post">
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" class="form-control" placeholder="First Name">
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+            <label for="email">Email:</label>
+            <input type="text" name="email" class="form-control" placeholder="example@mail.com">
+            <label for="password">Password:</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+            <input type="submit" class="btn btn-primary btn-margin" value="Register">
+        </form>
+    </div>
+    <div class="sub-container">
+        <h2>Login</h2>
+        <div style="color:red">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if message == "Invalid Email/Password" %}
+            <p>{{message}}</p>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </div>
+        <form action="/login" method="post">
+            <label for="email">Email:</label>
+            <input type="text" name="email" class="form-control" placeholder="Email">
+            <label for="password">Password:</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="submit" class="btn btn-primary btn-margin">
+        </form>
+    </div>
+</div>
+<p>{{user}}</p>
+</body>
+</html>

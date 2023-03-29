@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+
+<div class="outer-container">
+    <h1>Welcome {{user.first_name}}!</h1>
+    <div class="space-between">
+    <a href="/recipes" style="margin-top:13px; margin-right:15px;">back to recipes</a>
+    <form action="/logout" method="post">
+        <input type="submit" class="btn btn-primary btn-margin" value="Log Out">
+    </form>
+    </div>
+</div>
+
+<div class="outer-container space-between">
+    <h2>{{recipe.name}}</h2>
+    <h4>Posted by: {{recipe.first_name}} {{recipe.last_name}}</h4>
+</div>
+
+<div class="recipe-container" style="border: solid black 5px; padding:20px;">
+    <h3>Description:</h3>
+    <p class="indent">{{recipe.description}}</p>
+    <h3>Under 30 Minutes?:</h3>
+    {% if recipe.under_mins == 1: %}
+        <p class="indent">Yes</p>
+    {% endif %}
+    {% if recipe.under_mins == 0: %}
+        <p class="indent">No</p>
+    {% endif %}
+    <h3>Instructions:</h3>
+    <p class="indent">{{recipe.instructions}}</p>
+    <h3>Date Made:</h3>
+    <p class="indent">{{recipe.date_made.strftime("%B %d, %Y")}}</p>
+</div>
+
+</body>
+</html>
